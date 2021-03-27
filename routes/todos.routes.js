@@ -9,7 +9,6 @@ router.get('/list', async (req, res) => {
     const todos = await Todo.find();
     res.status(200).json(todos);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: 'Server side error on get Todos' });
   }
 });
@@ -37,13 +36,13 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const id = req.params.id;
-    const todoDeleted = await Todo.findByIdAndRemove(id);
+    const { id } = req.params;
+    await Todo.findByIdAndRemove(id);
     res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: 'Server side error on delete Todo' });
   }
-})
+});
 
 
 module.exports = router;
